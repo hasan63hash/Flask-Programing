@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Anasayfa
+{% endblock %}
+
+{% block navTitle %}
+    Anasayfa
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Resimler -->
+<div id="gallery-container" class="container-fluid">
+    <!-- Her farklı tarih için -->
+    {% for date in sorted_dates %}
+    <!-- Tarih başlığı -->
+    <div class="col-12 bg-dark text-white date-line">
+        <p class="date-text text-end">{{ date }}</p>
+    </div>
+    <!-- 1 veya daha fazla resmin olacağı row -->
+    <div class="row m-auto img-row">
+        <!-- Bu tarihteki her bir resim için -->
+        {% for img in img_dict[date] %}
+        <!-- Container -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-grid-container">
+            <!-- Resim kartı -->
+            <div class="card h-100 my-image-card">
+                <img class="card-img-top" src="{{ img.file_path + img.file_name }}" alt="{{ img.file_name }}">
+                <div class="card-body">
+                    <!-- Resmin adı -->
+                    <h5 class="card-title">{{ img.file_name.split('.')[0] }}</h5>
+                </div>
+                <div class="card-footer text-muted">
+                    <!-- Resmin tarihi -->
+                    {{ img.entry_date }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
